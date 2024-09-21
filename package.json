@@ -2,6 +2,7 @@
   "name": "todocli",
   "version": "1.0.0",
   "main": "toDo.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -9,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "chalk": "^5.3.0",
     "commander": "^12.1.0"
   }
 }
