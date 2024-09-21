@@ -34,7 +34,9 @@ const writeTodo = (todos)=>{
     fs.writeFileSync(savePath, data);
 }
 
-program.command('addTodo')
+
+
+    program.command('addTodo')
     .argument('<string>', 'New Todo to be added')
     .description('Add a new toDo')
     .action((todo)=>{
@@ -44,7 +46,7 @@ program.command('addTodo')
         console.log(chalk.green("Added Todo:", todo));
     })
 
-program.command('showTodo')
+    program.command('showTodo')
     .description('Show full list of ToDo')
     .action(()=>{
         let todos = readTodo();
@@ -64,6 +66,43 @@ program.command('showTodo')
                 }
             });
         }
+    })
+
+    program.command('rmTodo')
+    .argument('<integer>','Index of ToDo to be deleted')
+    .description('delete the todo of input index')
+    .action((index) => {
+        let todos = readTodo();
+
+        if (todos.length !== 0) {
+            let deleted = todos[index-1]
+            todos.splice(index-1,1)
+            console.log(chalk.green(`Todo deleted : ${deleted}`));
+            writeTodo(todos)
+
+        } else {
+            console.log(chalk.yellow(`Your todo is empty`));
+
+        }
+    });
+
+
+
+    program.command('comTodo')
+    .description('Marks the todo as complete')
+    .argument('<integer>', 'Add the index of the todo to be marked completed')
+    .action((index) => {
+        let todos = readTodo();
+
+        
+        if (index === -1) {
+            console.log(chalk.yellow('Todo not found.'));
+        } else {
+            todos[index] = `[Completed] ${todos[index]}`;
+            console.log(chalk.green.bold(`${todos[index]}`))
+            writeTodo(todos);
+        }
+
     })
 
 program.parse();
